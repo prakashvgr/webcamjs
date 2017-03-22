@@ -61,7 +61,7 @@
         var img = new Image();
         img.src = data_uri;
         //Api.classifyImage(img.src);
-        document.getElementById('results').innerHTML = '<img src="'+data_uri+'"/>';
+        document.getElementById('results').appendChild( img );
       } );
 		}
 
