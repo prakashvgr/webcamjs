@@ -60,8 +60,8 @@
         // display results in page
         var img = new Image();
         img.src = data_uri;
-        Webcam.attach('#results');
         //Api.classifyImage(img.src);
+        document.getElementById('results').innerHTML = '<img src="'+data_uri+'"/>';
       } );
 		}
 
