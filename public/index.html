@@ -1,0 +1,72 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>Image Capture Demo</title>
+	<style type="text/css">
+		body { font-family: Helvetica, sans-serif; }
+		h2, h3 { margin-top:0; }
+		form { margin-top: 15px; }
+		form > input { margin-right: 15px; }
+		#results { padding:15px; border:1px solid; background:#f8f8f8; }
+		#results > img { width: 160px; height: 120px; }
+    #my_camera { width: 50%; height: 50%; margin-left: auto; margin-right: auto; }
+		.top { width: 100%; }
+		.bottom { margin-top: 1%; width: 100%; }
+    .centre { text-align: center; }
+	</style>
+</head>
+<body>
+  <div name='parentDiv' class='centre'>	
+    <div class="top">
+      <h1>Test Frontend</h1>
+      
+      <div id="my_camera"></div>
+      
+      <!-- A button for taking snaps -->
+      <form>
+        <input type="button" value="Capture Image" onClick="take_image()">
+        <input type="button" value="Clear Data" onClick="clear_bottom()">
+      </form>
+    </div>
+    <div class="bottom">
+      <div id="results"><p>Photos:</p></div>
+    </div>
+  </div>
+	
+	<!-- First, include the Webcam.js JavaScript Library -->
+	<script type="text/javascript" src="./js/webcam.min.js"></script>
+  <script src="js/api.js"></script>
+
+	<!-- Configure a few settings and attach camera -->
+	<script language="JavaScript">
+		Webcam.set({
+      width: 640,
+      height: 480,
+			image_format: 'jpeg',
+			jpeg_quality: 90
+		});
+		Webcam.attach( '#my_camera' );
+	</script>
+	
+	<!-- Code to handle taking the snapshot and displaying it locally -->
+	<script language="JavaScript">
+		function take_image() {
+      clear_bottom();
+      // take snapshot and get image data
+      var retVal = null;
+      Webcam.snap( function(data_uri) {
+        // display results in page
+        var img = new Image();
+        img.src = data_uri;
+        Api.classifyImage(img.src);
+      } );
+		}
+
+    function clear_bottom() {
+			document.getElementById('results').innerHTML = '<p>Photos:</p>';
+		}
+	</script>
+</body>
+</html>
